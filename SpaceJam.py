@@ -83,6 +83,9 @@ class MyApp(ShowBase):
         self.Planet5 = spaceJamClasses.Planet(self.loader,'./Assets/Planets/protoPlanet.x', self.render, "Planet5", "./Assets/Planets/Planet-5.png", (2000, 6000, -90), 60)
         self.Planet6 = spaceJamClasses.Planet(self.loader,'./Assets/Planets/protoPlanet.x', self.render, "Planet6", "./Assets/Planets/Planet-6.png", (-1116, 5000, 1500), 240)
     
+        self.Sentinal2 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet5, 900, "MLB", self.Ship)
+        self.Sentinal1 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet2, 500, "Cloud", self.Ship)
+
     def SetCamera(self):
         "self.disableMouse()"
         self.camera.reparentTo(self.Ship.modelNode)

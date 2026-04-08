@@ -3,6 +3,8 @@ from panda3d.core import *
 from direct.task import Task
 from CollideObjectBase import *
 from direct.gui.OnscreenImage import OnscreenImage
+from direct.task.Task import TaskManager
+import DefensePaths as defensePaths
 
 class Universe(InverseSphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
@@ -67,36 +69,41 @@ class Drone(SphereCollideObject, ShowBase):
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
         
-        self.planetNode = planetNode
+class Orbiter(SphereCollideObject):
+    numOrbits = 0
+    velocity = 0.005
+    cloudTimer = 240
+    
+    def __init__(self, loader: Loader, taskMgr: TaskManager, modelPath: str, parentNode: NodePath, nodeName: str, scaleVec: Vec3, texPath: str, centralObject: PlacedObject, orbitRadius: float, orbitType: str, staringAt: Vec3):
+        super(Orbiter, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 3.2)
+        
+        self.taskMgr = taskMgr
+        self.orbitType = orbitType
+        self.modelNode.setScale(scaleVec)
+        tex = loader.loadTexture(texPath)
+        self.modelNode.setTexture(tex, 1)
+        self.orbitObject = centralObject
         self.orbitRadius = orbitRadius
-        self.orbitSpeed = orbitSpeed
-        self.angle = random.random() * 2 * math.pi  # random starting position
+        self.staringAt = staringAt
+        Orbiter.numOrbits += 1
+            
+        self.cloudClock = 0
+        self.taskFlag = "Traveler-" + str(Orbiter.numOrbits)
+        taskMgr.add(self.Orbit, self.taskFlag)
+    
+    def Orbit(self, task):
+        if self.orbitType == "MLB":
+            positionVec = defensePaths.BaseballSeams(task.time * Orbiter.velocity, self.numOrbits, 2.0)
+            self.modelNode.setPos(positionVec * self.orbitRadius + self.orbitObject.modelNode.getPos())
 
-        # Optional vertical bobbing
-        self.bobHeight = random.uniform(20, 50)
-        self.bobSpeed = random.uniform(1, 3)
+        elif self.orbitType == "Cloud":
+            if self.cloudClock < Orbiter.cloudTimer:
+                self.cloudClock += 1
+            
+            else:
+                self.cloudClock = 0
+                positionVec = defensePaths.Cloud()
+                self.modelNode.setPos(positionVec * self.orbitRadius + self.orbitObject.modelNode.getPos())
         
-        # Add task to update orbit
-        taskMgr.add(self.UpdateOrbit, nodeName + "_orbit")
-
-    def UpdateOrbit(self, task):
-        if self.planetNode is None:
-            return task.done
-        
-        # Update angle
-        self.angle += globalClock.getDt() * self.orbitSpeed
-        
-        # Center position
-        cx, cy, cz = self.planetNode.getPos()
-        
-        # Circular orbit
-        x = cx + self.orbitRadius * math.cos(self.angle)
-        y = cy + self.orbitRadius * math.sin(self.angle)
-        
-        # Vertical bobbing
-        z = cz + self.bobHeight * math.sin(self.angle * self.bobSpeed)
-        
-        self.modelNode.setPos(x, y, z)
-        self.modelNode.lookAt(self.planetNode)  # optional: drone faces the planet
-        
+        self.modelNode.lookAt(self.staringAt.modelNode)
         return task.cont
