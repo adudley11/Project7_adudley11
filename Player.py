@@ -15,7 +15,7 @@ import re
 
 class Ship(SphereCollideObject, ShowBase):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super().__init__(loader, modelPath, parentNode, nodeName, Vec3(0,0,0), 2)
+        super().__init__(loader, modelPath, parentNode, nodeName, Vec3(.3, 0, 0), 1.3)
         self.loader = loader
         self.taskManager = taskMgr # type: ignore
         self.render = parentNode  

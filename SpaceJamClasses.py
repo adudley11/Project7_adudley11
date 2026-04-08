@@ -8,7 +8,7 @@ import DefensePaths as defensePaths
 
 class Universe(InverseSphereCollideObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Universe, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 0.9)
+        super(Universe, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 1.1)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
         
@@ -19,7 +19,7 @@ class Universe(InverseSphereCollideObject):
         
 class Station(CapsuleCollidableObject):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super(Station, self).__init__(loader, modelPath, parentNode, nodeName, 1, -1, 5, 1, -1, -5, 10)
+        super(Station, self).__init__(loader, modelPath, parentNode, nodeName, -1, 2, 0, 1, -11.5, 0, 4)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
         
@@ -48,7 +48,7 @@ class Missile(SphereCollideObject):
     
 class Planet(SphereCollideObject, ShowBase):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super().__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 1.5)
+        super().__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 1.1)
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
         
@@ -60,7 +60,7 @@ class Drone(SphereCollideObject, ShowBase):
     # Number of drones spawned
     droneCount = 0
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        super().__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 3)
+        super().__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 2)
         
         self.modelNode.setPos(posVec)
         self.modelNode.setScale(scaleVec)
