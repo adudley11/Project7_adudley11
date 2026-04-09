@@ -73,7 +73,7 @@ class Ship(SphereCollideObject, ShowBase):
             self.thrustSound.stop()
                     
     def ApplyThrust(self, task):
-        rate = 5
+        rate = 7
         trajectory = self.render.getRelativeVector(self.modelNode, Vec3.forward())
         trajectory.normalize()
         
@@ -247,7 +247,7 @@ class Ship(SphereCollideObject, ShowBase):
             print(victim, ' hit at ', intoPosition)
             
             if (strippedString == "Drone"):
-                self.hitDrone()
+                self.hitDrone(intoPosition)
                 
             else:
                 self.DestroyObject(victim, intoPosition)
@@ -259,16 +259,12 @@ class Ship(SphereCollideObject, ShowBase):
         droneNP = entry.getIntoNodePath().getParent()
         drone = droneNP.getPythonTag("owner")
 
-        # ✅ GUARDS (these stop the crashes)
-        if drone is None:
-            return
-        if drone.isDestroyed:
-            return
+        drone.Health.Damage(1)
 
-        drone.droneHealth.Damage(1)
-
-        if drone.droneHealth.val <= 0:
-            drone.DestroyObject()
+        intoPosition = Vec3(entry.getSurfacePoint(self.render))
+        
+        if drone.Health.val <= 0:
+            self.DestroyObject(drone, intoPosition)
 
     def DestroyObject(self, hitID, hitPosition):
         nodeID = self.render.find(hitID)

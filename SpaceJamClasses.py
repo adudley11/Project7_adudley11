@@ -72,6 +72,7 @@ class Drone(SphereCollideObject, ShowBase):
         
         self.Health = Stats("Drone Health", 3)
         self.modelNode.setPythonTag("owner", self)
+        
     
 class Stats:
     def __init__(self, name: str, max_val: float):
@@ -88,7 +89,7 @@ class Orbiter(SphereCollideObject):
     cloudTimer = 240
     
     def __init__(self, loader: Loader, taskMgr: TaskManager, modelPath: str, parentNode: NodePath, nodeName: str, scaleVec: Vec3, texPath: str, centralObject: PlacedObject, orbitRadius: float, orbitType: str, staringAt: Vec3):
-        super(Orbiter, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 3.2)
+        super(Orbiter, self).__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 5)
         
         self.taskMgr = taskMgr
         self.orbitType = orbitType
