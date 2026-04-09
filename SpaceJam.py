@@ -1,6 +1,6 @@
 from direct.showbase.ShowBase import ShowBase
 from direct.task import Task
-from panda3d.core import CollisionTraverser, CollisionHandlerPusher
+from panda3d.core import CollisionTraverser, CollisionHandlerPusher, CollisionHandlerEvent
 import math, sys, random
 import DefensePaths as defensePaths
 import SpaceJamClasses as spaceJamClasses
@@ -32,7 +32,11 @@ class MyApp(ShowBase):
                 
         self.cTrav = CollisionTraverser()
         self.pusher = CollisionHandlerPusher()
-        
+                
+        self.cHandler = CollisionHandlerEvent()
+        self.cHandler.addInPattern("into-%in")
+        self.cHandler.addAgainPattern("again-%in")
+
         self.cTrav.addCollider(self.Ship.collisionNode, self.pusher)
         self.pusher.addCollider(self.Ship.collisionNode, self.Ship.modelNode)
         
@@ -72,6 +76,7 @@ class MyApp(ShowBase):
             nickName2 = "Drone2" + str(spaceJamClasses.Drone.droneCount)
             self.DrawCloudDefense(self.Planet6, nickName1)
         
+        self.taskMgr.add(self.updateCollisions, "update-collisions")
         self.accept('escape', self.quit)
 
     def SetupScene(self):
@@ -115,6 +120,11 @@ class MyApp(ShowBase):
         self.audio3d.attachSoundToObject(self.droneSound, drone.modelNode)
         self.droneSound.play()
         
+    
+    def updateCollisions(self, task):
+        self.cTrav.traverse(self.render)
+        return task.cont
+
     # Prepare message if server wants to quit 
     def quit(self):
         sys.exit()

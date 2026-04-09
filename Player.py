@@ -245,12 +245,31 @@ class Ship(SphereCollideObject, ShowBase):
         
         if (strippedString == "Drone" or strippedString == "Planet" or strippedString == "Station"):
             print(victim, ' hit at ', intoPosition)
-            self.DestroyObject(victim, intoPosition)
-            self.SetParticles()
             
+            if (strippedString == "Drone"):
+                self.hitDrone()
+                
+            else:
+                self.DestroyObject(victim, intoPosition)
+                
         print(shooter + ' is DONE.')
         Missile.Intervals[shooter].finish()
-        
+
+    def hitDrone(self, entry):
+        droneNP = entry.getIntoNodePath().getParent()
+        drone = droneNP.getPythonTag("owner")
+
+        # ✅ GUARDS (these stop the crashes)
+        if drone is None:
+            return
+        if drone.isDestroyed:
+            return
+
+        drone.droneHealth.Damage(1)
+
+        if drone.droneHealth.val <= 0:
+            drone.DestroyObject()
+
     def DestroyObject(self, hitID, hitPosition):
         nodeID = self.render.find(hitID)
         nodeID.detachNode()
@@ -265,6 +284,7 @@ class Ship(SphereCollideObject, ShowBase):
         
         self.explodeIntervals[tag] = LerpFunc(self.ExplodeLight, duration = 4.0)
         self.explodeIntervals[tag].start()
+        self.SetParticles()
         
     def ExplodeLight(self, t):
         if t == 1.0 and self.explodeEffect:
@@ -276,6 +296,6 @@ class Ship(SphereCollideObject, ShowBase):
     def SetParticles(self):
         base.enableParticles() # type: ignore
         self.explodeEffect =  ParticleEffect()
-        """self.explodeEffect.loadConfig("./Assets/Part-Efx/basic_xpld_efx.pdf")"""
+        self.explodeEffect.loadConfig("./Assets/Part-Efx/basic_xpld_efx.ptf")
         self.explodeEffect.setScale(20)
         self.explodeNode = self.render.attachNewNode('ExplosionEffects')

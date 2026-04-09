@@ -59,6 +59,7 @@ class Planet(SphereCollideObject, ShowBase):
 class Drone(SphereCollideObject, ShowBase):
     # Number of drones spawned
     droneCount = 0
+    
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
         super().__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 2)
         
@@ -68,7 +69,18 @@ class Drone(SphereCollideObject, ShowBase):
         self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
+        
+        self.Health = Stats("Drone Health", 3)
+        self.modelNode.setPythonTag("owner", self)
     
+class Stats:
+    def __init__(self, name: str, max_val: float):
+        self.name = name
+        self.max_val = max_val
+        self.val = max_val
+        
+    def Damage(self, amount):
+        self.val = max(self.val - amount, 0)
         
 class Orbiter(SphereCollideObject):
     numOrbits = 0
