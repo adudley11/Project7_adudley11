@@ -68,6 +68,7 @@ class Drone(SphereCollideObject, ShowBase):
         self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
+    
         
 class Orbiter(SphereCollideObject):
     numOrbits = 0
