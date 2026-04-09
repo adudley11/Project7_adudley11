@@ -32,6 +32,13 @@ class MyApp(ShowBase):
                 
         self.cTrav = CollisionTraverser()
         self.pusher = CollisionHandlerPusher()
+        
+        
+        self.eventHandler = CollisionHandlerEvent()
+        self.eventHandler.addInPattern('%fn-into-%in')
+
+        self.cTrav.addCollider(self.Ship.collisionNode, self.eventHandler)
+
 
         self.cTrav.addCollider(self.Ship.collisionNode, self.pusher)
         self.pusher.addCollider(self.Ship.collisionNode, self.Ship.modelNode)
@@ -44,8 +51,8 @@ class MyApp(ShowBase):
             spaceJamClasses.Drone.droneCount += 1
             nickName1 = "Drone1" + str(spaceJamClasses.Drone.droneCount)
             nickName2 = "Drone2" + str(spaceJamClasses.Drone.droneCount)
-            """self.DrawCloudDefense(self.Planet1, nickName1)
-            self.DrawBaseballSeams(self.Station, nickName2, j, fullCycle, 2)"""
+            self.DrawCloudDefense(self.Planet1, nickName1)
+            self.DrawBaseballSeams(self.Station, nickName2, j, fullCycle, 2)
 
             spaceJamClasses.Drone.droneCount += 1
             nickName1 = "Drone1" + str(spaceJamClasses.Drone.droneCount)
@@ -71,6 +78,36 @@ class MyApp(ShowBase):
             nickName1 = "Drone1" + str(spaceJamClasses.Drone.droneCount)
             nickName2 = "Drone2" + str(spaceJamClasses.Drone.droneCount)
             self.DrawCloudDefense(self.Planet6, nickName1)
+            
+            spaceJamClasses.miniDrone.droneCount += 1
+            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
+            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
+            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
+            
+            spaceJamClasses.miniDrone.droneCount += 1
+            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
+            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
+            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
+            
+            spaceJamClasses.miniDrone.droneCount += 1
+            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
+            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
+            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
+            
+            spaceJamClasses.miniDrone.droneCount += 1
+            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
+            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
+            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
+            
+            spaceJamClasses.miniDrone.droneCount += 1
+            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
+            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
+            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
+            
+            spaceJamClasses.miniDrone.droneCount += 1
+            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
+            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
+            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
         
         self.taskMgr.add(self.updateCollisions, "update-collisions")
         self.accept('escape', self.quit)

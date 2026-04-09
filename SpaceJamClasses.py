@@ -73,6 +73,20 @@ class Drone(SphereCollideObject, ShowBase):
         self.Health = Stats("Drone Health", 3)
         self.modelNode.setPythonTag("owner", self)
         
+class miniDrone(SphereCollideObject, ShowBase):
+    # Number of drones spawned
+    droneCount = 0
+    
+    def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
+        super().__init__(loader, modelPath, parentNode, nodeName, Vec3(0, 0, 0), 1)
+        
+        self.modelNode.setPos(posVec)
+        self.modelNode.setScale(scaleVec)
+
+        self.modelNode.setName(nodeName)
+        tex = loader.loadTexture(texPath)
+        self.modelNode.setTexture(tex, 1)
+        
     
 class Stats:
     def __init__(self, name: str, max_val: float):
