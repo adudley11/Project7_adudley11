@@ -81,9 +81,9 @@ class MyApp(ShowBase):
             nickName2 = "Drone2" + str(spaceJamClasses.Drone.droneCount)
             self.DrawCloudDefense(self.Planet6, nickName1)
             
-        for drone in self.drones:
+        """for drone in self.drones:
             for i in range(3):
-                spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "MiniDrone", 2.0, "./Assets/Drone Defender/octotoad1_auv.png", drone, 25, "Cloud", self.Ship)
+                spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "MiniDrone", 2.0, "./Assets/Drone Defender/octotoad1_auv.png", drone, 25, "Cloud", self.Ship)"""
         
         self.taskMgr.add(self.updateCollisions, "update-collisions")
         self.accept('escape', self.quit)
