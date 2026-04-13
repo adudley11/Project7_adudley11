@@ -79,7 +79,7 @@ class MyApp(ShowBase):
             nickName2 = "Drone2" + str(spaceJamClasses.Drone.droneCount)
             self.DrawCloudDefense(self.Planet6, nickName1)
             
-            spaceJamClasses.miniDrone.droneCount += 1
+            """spaceJamClasses.miniDrone.droneCount += 1
             nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
             nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
             self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
@@ -107,7 +107,7 @@ class MyApp(ShowBase):
             spaceJamClasses.miniDrone.droneCount += 1
             nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
             nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
-            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
+            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)"""
         
         self.taskMgr.add(self.updateCollisions, "update-collisions")
         self.accept('escape', self.quit)

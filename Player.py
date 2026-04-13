@@ -233,7 +233,7 @@ class Ship(SphereCollideObject, ShowBase):
         print("tempVar: " + str(tempVar))
         shooter = tempVar[0]
         print("Shooter" + str(shooter))
-        tempVar = intoNode.split('-')
+        tempVar = intoNode.split('_')
         print("TempVar1: "+ str(tempVar))
         tempVar = intoNode.split('_')
         print("TempVar2: "+ str(tempVar))
@@ -243,20 +243,21 @@ class Ship(SphereCollideObject, ShowBase):
         pattern = r'[0-9]'
         strippedString = re.sub(pattern, '', victim)
         
-        if (strippedString == "Drone" or strippedString == "Planet" or strippedString == "Station"):
+        """if (strippedString == "Drone" or strippedString == "Planet" or strippedString == "Station"):"""
+        if ("Drone" in strippedString):
             print(victim, ' hit at ', intoPosition)
             
-            if (strippedString == "Drone"):
-                self.hitDrone(intoPosition)
+            """if (strippedString == "Drone"):"""
+            self.hitDrone(intoPosition)
                 
-            else:
-                self.DestroyObject(victim, intoPosition)
+            """else:
+                self.DestroyObject(victim, intoPosition)"""
                 
         print(shooter + ' is DONE.')
         Missile.Intervals[shooter].finish()
 
     def hitDrone(self, entry):
-        droneNP = entry.getIntoNodePath().getParent()
+        droneNP = entry.getIntoNodePath().getName()
         drone = droneNP.getPythonTag("owner")
 
         drone.Health.Damage(1)
