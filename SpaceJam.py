@@ -13,7 +13,7 @@ class MyApp(ShowBase):
         
         self.SetupScene()
         self.SetCamera()
-        self.drones = []
+        """self.drones = []"""
         
         self.backgroundMusic = self.loader.loadMusic('./Assets/Audio/background_music.mp3')
         self.backgroundMusic.setLoop(True)
@@ -123,10 +123,7 @@ class MyApp(ShowBase):
         unitVec = defensePaths.BaseballSeams(step, numSeams, B = 0.4)
         unitVec.normalize()
         position = unitVec * radius * 250 + centeralObject.modelNode.getPos()
-        drone = spaceJamClasses.Drone(self.loader,"./Assets/Drone Defender/DroneDefender.obj", self.render, droneName, "./Assets/Drone Defender/octotoad1_auv.png", position, 5)
-        
-        self.audio3d.attachSoundToObject(self.droneSound, drone.modelNode)
-        self.droneSound.play()
+        spaceJamClasses.Drone(self.loader,"./Assets/Drone Defender/DroneDefender.obj", self.render, droneName, "./Assets/Drone Defender/octotoad1_auv.png", position, 5)
         
     def DrawCloudDefense(self, centralObject, droneName):
         unitVec = defensePaths.Cloud()
@@ -134,10 +131,7 @@ class MyApp(ShowBase):
         position = unitVec * 500 + centralObject.modelNode.getPos()
         drone = spaceJamClasses.Drone(self.loader, "./Assets/Drone Defender/DroneDefender.obj", self.render, droneName, "./Assets/Drone Defender/octotoad1_auv.png", position, 10)
         
-        self.drones.append(drone)
-        
-        self.audio3d.attachSoundToObject(self.droneSound, drone.modelNode)
-        self.droneSound.play()
+        """self.drones.append(drone)"""
     
     def updateCollisions(self, task):
         self.cTrav.traverse(self.render)

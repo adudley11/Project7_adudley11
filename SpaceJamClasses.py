@@ -73,6 +73,9 @@ class Drone(SphereCollideObject, ShowBase):
         self.Health = Stats("Drone Health", 3)
         self.modelNode.setPythonTag("owner", self)
         
+        """self.audio3d.attachSoundToObject()
+        self.droneSound.play()
+        """
 class miniDrone(SphereCollideObject, ShowBase):
     # Number of drones spawned
     droneCount = 0
@@ -87,7 +90,6 @@ class miniDrone(SphereCollideObject, ShowBase):
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
         
-    
 class Stats:
     def __init__(self, name: str, max_val: float):
         self.name = name
