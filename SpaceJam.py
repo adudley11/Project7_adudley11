@@ -31,12 +31,13 @@ class MyApp(ShowBase):
         fullCycle = 60
                 
         self.cTrav = CollisionTraverser()
-        self.pusher = CollisionHandlerPusher()
+        self.cTrav = self.cTrav
         
         
         self.eventHandler = CollisionHandlerEvent()
-        self.eventHandler.addInPattern('%fn-into-%in')
+        self.eventHandler.addInPattern('into')
 
+        self.pusher = CollisionHandlerPusher()
         self.cTrav.addCollider(self.Ship.collisionNode, self.eventHandler)
 
 
@@ -127,15 +128,7 @@ class MyApp(ShowBase):
         self.Planet5 = spaceJamClasses.Planet(self.loader,'./Assets/Planets/protoPlanet.x', self.render, "Planet5", "./Assets/Planets/Planet-5.png", (2000, 6000, -90), 60)
         self.Planet6 = spaceJamClasses.Planet(self.loader,'./Assets/Planets/protoPlanet.x', self.render, "Planet6", "./Assets/Planets/Planet-6.png", (-1116, 5000, 1500), 240)
     
-        self.Sentinal1 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet5, 900, "MLB", self.Ship)
-        self.Sentinal2 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet2, 500, "Cloud", self.Ship)
-        self.Sentinal3 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet6, 300, "MLB", self.Ship)
-        self.Sentinal4 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet3, 400, "Cloud", self.Ship)
-        self.Sentinal5 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet1, 600, "MLB", self.Ship)
-        self.Sentinal6 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet3, 800, "Cloud", self.Ship)
-        self.Sentinal7 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet6, 700, "MLB", self.Ship)
-        self.Sentinal8 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet2, 500, "Cloud", self.Ship)
-        self.Sentinal9 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet4, 200, "MLB", self.Ship)
+        """ cdn"""
 
     def SetCamera(self):
         "self.disableMouse()"

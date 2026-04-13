@@ -222,6 +222,7 @@ class Ship(SphereCollideObject, ShowBase):
         return Task.cont
         
     def HandleInto(self, entry):
+        print("Entry: " + str(entry))
         fromNode = entry.getFromNodePath().getName()
         print("fromNode: " + fromNode)
         intoNode = entry.getIntoNodePath().getName()
@@ -248,7 +249,9 @@ class Ship(SphereCollideObject, ShowBase):
             print(victim, ' hit at ', intoPosition)
             
             """if (strippedString == "Drone"):"""
-            self.hitDrone(intoPosition)
+            ### MODIFIED ###
+            self.hitDrone(entry)
+            ### MODIFIED ###
                 
             """else:
                 self.DestroyObject(victim, intoPosition)"""
@@ -256,20 +259,22 @@ class Ship(SphereCollideObject, ShowBase):
         print(shooter + ' is DONE.')
         Missile.Intervals[shooter].finish()
 
-    def hitDrone(self, entry):
-        droneNP = entry.getIntoNodePath().getName()
-        drone = droneNP.getPythonTag("owner")
+### MODIFIED ###
+    def hitDrone(self, collision):
+        droneHit = collision.getIntoNodePath()
+        droneInstance = droneHit.findNetPythonTag("owner").getPythonTag("owner")
 
-        drone.Health.Damage(1)
+        droneInstance.Health.Damage(1)
 
-        intoPosition = Vec3(entry.getSurfacePoint(self.render))
+        intoPosition = Vec3(collision.getSurfacePoint(self.render))
         
-        if drone.Health.val <= 0:
-            self.DestroyObject(drone, intoPosition)
+        if droneInstance.Health.val <= 0:
+            self.DestroyObject(collision.getIntoNodePath(), intoPosition)
+### MODIFIED ###
 
     def DestroyObject(self, hitID, hitPosition):
-        nodeID = self.render.find(hitID)
-        nodeID.detachNode()
+        Instance = hitID.findNetPythonTag("owner").getPythonTag("owner")
+        Instance.modelNode.detachNode()
         
         self.explodeNode.setPos(hitPosition)
         self.Explode()
