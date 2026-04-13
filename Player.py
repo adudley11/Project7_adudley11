@@ -244,20 +244,19 @@ class Ship(SphereCollideObject, ShowBase):
         pattern = r'[0-9]'
         strippedString = re.sub(pattern, '', victim)
         
-        """if (strippedString == "Drone" or strippedString == "Planet" or strippedString == "Station"):"""
-        if ("Drone" in strippedString):
-            print(victim, ' hit at ', intoPosition)
-            
-            """if (strippedString == "Drone"):"""
-            ### MODIFIED ###
-            self.hitDrone(entry)
-            ### MODIFIED ###
+        if (strippedString == "Drone" or strippedString == "Planet" or strippedString == "Station"):
+            if ("Drone" in strippedString):
+                print(victim, ' hit at ', intoPosition)
+                ### MODIFIED ###
+                self.hitDrone(entry)
+                ### MODIFIED ###
                 
-            """else:
-                self.DestroyObject(victim, intoPosition)"""
+            else:
+                self.DestroyObject(victim, intoPosition)
                 
         print(shooter + ' is DONE.')
-        Missile.Intervals[shooter].finish()
+        if shooter in Missile.Intervals:
+            Missile.Intervals[shooter].finish()
 
 ### MODIFIED ###
     def hitDrone(self, collision):
@@ -273,8 +272,13 @@ class Ship(SphereCollideObject, ShowBase):
 ### MODIFIED ###
 
     def DestroyObject(self, hitID, hitPosition):
-        Instance = hitID.findNetPythonTag("owner").getPythonTag("owner")
-        Instance.modelNode.detachNode()
+        if isinstance(hitID, NodePath) and not hitID.findNetPythonTag("owner").isEmpty():
+            Instance = hitID.findNetPythonTag("owner").getPythonTag("owner")
+            Instance.modelNode.detachNode()
+        
+        else:
+            nodeID = self.render.find(hitID)
+            nodeID.detachNode()
         
         self.explodeNode.setPos(hitPosition)
         self.Explode()

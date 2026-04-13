@@ -13,7 +13,7 @@ class MyApp(ShowBase):
         
         self.SetupScene()
         self.SetCamera()
-        """self.drones = []"""
+        self.drones = []
         
         self.backgroundMusic = self.loader.loadMusic('./Assets/Audio/background_music.mp3')
         self.backgroundMusic.setLoop(True)
@@ -81,9 +81,9 @@ class MyApp(ShowBase):
             nickName2 = "Drone2" + str(spaceJamClasses.Drone.droneCount)
             self.DrawCloudDefense(self.Planet6, nickName1)
             
-        """for drone in self.drones:
+        for drone in self.drones:
             for i in range(3):
-                spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "MiniDrone", 2.0, "./Assets/Drone Defender/octotoad1_auv.png", drone, 25, "Cloud", self.Ship)"""
+                spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "MiniDrone", 2.0, "./Assets/Drone Defender/octotoad1_auv.png", drone, 25, "Cloud", self.Ship)
         
         self.taskMgr.add(self.updateCollisions, "update-collisions")
         self.accept('escape', self.quit)
@@ -129,9 +129,9 @@ class MyApp(ShowBase):
         unitVec = defensePaths.Cloud()
         unitVec.normalize()
         position = unitVec * 500 + centralObject.modelNode.getPos()
-        drone = spaceJamClasses.Drone(self.loader, "./Assets/Drone Defender/DroneDefender.obj", self.render, droneName, "./Assets/Drone Defender/octotoad1_auv.png", position, 10)
+        drone = spaceJamClasses.Drone(self.loader, "./Assets/Drone Defender/DroneDefender.obj", self.render, droneNamfe, "./Assets/Drone Defender/octotoad1_auv.png", position, 10)
         
-        """self.drones.append(drone)"""
+        self.drones.append(drone)
     
     def updateCollisions(self, task):
         self.cTrav.traverse(self.render)

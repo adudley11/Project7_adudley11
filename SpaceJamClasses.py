@@ -90,6 +90,8 @@ class miniDrone(SphereCollideObject, ShowBase):
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
         
+        self.Health = Stats("Mini Drone Health", 1)
+        self.modelNode.setPythonTag("owner", self)
 class Stats:
     def __init__(self, name: str, max_val: float):
         self.name = name
