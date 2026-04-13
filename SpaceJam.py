@@ -13,7 +13,8 @@ class MyApp(ShowBase):
         
         self.SetupScene()
         self.SetCamera()
-
+        self.drones = []
+        
         self.backgroundMusic = self.loader.loadMusic('./Assets/Audio/background_music.mp3')
         self.backgroundMusic.setLoop(True)
         self.backgroundMusic.setVolume(0.2)
@@ -80,35 +81,9 @@ class MyApp(ShowBase):
             nickName2 = "Drone2" + str(spaceJamClasses.Drone.droneCount)
             self.DrawCloudDefense(self.Planet6, nickName1)
             
-            """spaceJamClasses.miniDrone.droneCount += 1
-            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
-            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
-            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
-            
-            spaceJamClasses.miniDrone.droneCount += 1
-            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
-            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
-            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
-            
-            spaceJamClasses.miniDrone.droneCount += 1
-            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
-            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
-            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
-            
-            spaceJamClasses.miniDrone.droneCount += 1
-            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
-            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
-            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
-            
-            spaceJamClasses.miniDrone.droneCount += 1
-            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
-            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
-            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)
-            
-            spaceJamClasses.miniDrone.droneCount += 1
-            nickName1 = "Mini1" + str(spaceJamClasses.miniDrone.droneCount)
-            nickName2 = "Mini2" + str(spaceJamClasses.miniDrone.droneCount)
-            self.DrawCloudDefense(spaceJamClasses.Drone, nickName1)"""
+        for drone in self.drones:
+            for i in range(3):
+                spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "MiniDrone", 2.0, "./Assets/Drone Defender/octotoad1_auv.png", drone, 25, "Cloud", self.Ship)
         
         self.taskMgr.add(self.updateCollisions, "update-collisions")
         self.accept('escape', self.quit)
@@ -128,7 +103,16 @@ class MyApp(ShowBase):
         self.Planet5 = spaceJamClasses.Planet(self.loader,'./Assets/Planets/protoPlanet.x', self.render, "Planet5", "./Assets/Planets/Planet-5.png", (2000, 6000, -90), 60)
         self.Planet6 = spaceJamClasses.Planet(self.loader,'./Assets/Planets/protoPlanet.x', self.render, "Planet6", "./Assets/Planets/Planet-6.png", (-1116, 5000, 1500), 240)
     
-        """ cdn"""
+        self.Sentinal1 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet5, 900, "MLB", self.Ship)
+        self.Sentinal2 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet2, 500, "Cloud", self.Ship)
+        self.Sentinal3 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet6, 300, "MLB", self.Ship)
+        self.Sentinal4 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet3, 400, "Cloud", self.Ship)
+        self.Sentinal5 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet1, 600, "MLB", self.Ship)
+        self.Sentinal6 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet3, 800, "Cloud", self.Ship)
+        self.Sentinal7 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet6, 700, "MLB", self.Ship)
+        self.Sentinal8 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet2, 500, "Cloud", self.Ship)
+        self.Sentinal9 = spaceJamClasses.Orbiter(self.loader, self.taskMgr, "./Assets/Drone Defender/DroneDefender.obj", self.render, "Drone", 6.0, "./Assets/Drone Defender/octotoad1_auv.png", self.Planet4, 200, "MLB", self.Ship)
+        
 
     def SetCamera(self):
         "self.disableMouse()"
@@ -150,9 +134,10 @@ class MyApp(ShowBase):
         position = unitVec * 500 + centralObject.modelNode.getPos()
         drone = spaceJamClasses.Drone(self.loader, "./Assets/Drone Defender/DroneDefender.obj", self.render, droneName, "./Assets/Drone Defender/octotoad1_auv.png", position, 10)
         
+        self.drones.append(drone)
+        
         self.audio3d.attachSoundToObject(self.droneSound, drone.modelNode)
         self.droneSound.play()
-        
     
     def updateCollisions(self, task):
         self.cTrav.traverse(self.render)
